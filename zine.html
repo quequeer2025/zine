@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Zine</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const imgs = document.querySelectorAll(".zoom-img");
+  
+    imgs.forEach(img => {
+      img.addEventListener("click", () => {
+        // nếu có data-full thì thay src khi mở lớn
+        if (!img.classList.contains("expanded") && img.dataset.full) {
+          img.dataset.thumb = img.src;    // lưu ảnh nhỏ
+          img.src = img.dataset.full;     // đổi sang ảnh lớn
+        } else if (img.classList.contains("expanded") && img.dataset.thumb) {
+          img.src = img.dataset.thumb;    // đổi lại ảnh nhỏ
+        }
+  
+        img.classList.toggle("expanded");
+      });
+    });
+  });
+  </script>
+    
+  
+<body>
+
+<div class="zine-container">
+
+  <!-- LEFT COLUMN (media) -->
+  <aside class="zine-col left">
+    <div class="left-inner">
+      <!-- Thay các <img> sau bằng URL ảnh thật của bạn -->
+      <img class="media-img" src="data/IMG_9171.png" alt="image 1">
+      <p class="caption">Cống cầu kênh chặn dòng nước chảy từ sông Hàm Luông vào kênh<br><i>Ảnh: Lưu An</i></p>
+     
+      <img class="media-img" src="data/IMG_3989.png" alt="image 3">
+      <img class="media-img" src="data/IMG_3983.png" alt="image 4">
+      <p class="caption">Sân Chim Vàm Hồ - mùa đó vào rừng chúng tôi đi một đoạn ngắn, nghe câu chuyện của rừng<br><i>Ảnh: Kai Nguyễn</i></p>
+
+      <div class="media-block center-80">
+      <img class="media-img" src="data/IMG_8558.png" alt="image 5">
+      <p class="caption">Miếu Thiên Hậu: Ngôi miếu không mở cửa, thời gian trùng tu từ hơn 12 năm trước<br><i>Ảnh: Lưu An</i></p>
+    </div>
+
+    <div class="media-block center-80">
+      <img class="media-img" src="data/IMG_9167.png" alt="image 6">
+      <p class="caption">Hướng nhìn từ Chùa Bà Chúa Xứ ra mặt sông<br><i>Ảnh: Lưu An</i></p>
+    </div>
+
+      <!-- Video (đã là mp4 link trực tiếp) -->
+      <video playsinline controls>
+        <source src="https://github.com/chaudienoi/bentre/raw/main/IMG_8569.mp4" type="video/mp4">
+        Trình duyệt không hỗ trợ video.
+      </video>
+      <p class="caption">Hoàng hôn trên phà Sơn phú<br><i>Video: Lưu An</i></p>
+
+      <img class="media-img" src="data/IMG_8511.png" alt="image 7">
+      <p class="caption">Bếp ở nhà nghỉ Lan Anh, gần cây xăng Thần Đèn<br><i>Ảnh: Lưu An</i></p>
+
+      <div class="media-block center-50">
+        <img class="media-img" src="data/03.png" alt="image 8" >
+        <p class="caption">Bến Tre vào ban đêm - một trong những ngôi nhà cũ kỳ lạ ở đây<br><i>Ảnh: Châu Nhi</i></p>
+      </div>
+      
+      <video playsinline controls>
+        <source src="https://github.com/chaudienoi/bentre/raw/main/7d9aa15e-fc91-4cf5-a7a7-1c37a8e00bc0.mp4" type="video/mp4">
+      </video>
+      <p class="caption">Trên thuyền trong chuyến tour đêm đặc biệt ở Cồn Phụng<br><i>Video: Châu Hoàng</i></p>
+
+      <img class="media-img" src="data/02.png" alt="image 4">
+      <p class="caption">Nhà văn hoá - cửa hàng 0 đồng - không gian cộng đồng của xã<br><i>Ảnh: Châu Nhi</i></p>
+    
+      <hr class="poem-hr">
+      <br>
+      <br>
+      <img class="media-img" src="data/dua.png" alt="image 4">
+      <p class="caption">Sân phơi vỏ dừa tại một xưởng sơ chế dừa<br><i>Ảnh: Châu Nhi</i></p>
+
+      <img class="media-img" src="data/rau.png" alt="image 4">
+      <p class="caption">Các loại rau gia vị và thuốc tìm thấy tại những địa điểm khác nhau<br><i>Ảnh: Kai Nguyễn</i></p>
+      
+      <img class="media-img" src="data/gia cu.png" alt="image 4">
+      <p class="caption">Dừa được chế tác thành các loại vật dụng<br><i>Ảnh: Châu Nhi</i></p>
+
+      <img class="media-img" src="data/nhac cu.png" alt="image 4">
+      <p class="caption">Các loại nhạc cụ bằng dừa<br><i>Ảnh: Châu Nhi</i></p>
+      <div class="media-block center-80">
+      <img class="media-img" src="data/cuon xo dua.png" alt="image 4">
+      <p class="caption">Các cuộn xơ dừa chất thành từng đống trong nhà máy sản xuất thảm<br><i>Ảnh: Châu Nhi</i></p>
+      </div>
+      <img class="media-img" src="data/tools.png" alt="image 4">
+      <p class="caption">Các dụng cụ trong xưởng sơ chế dừa<br><i>Ảnh: Kai Nguyễn</i></p>
+
+      <img class="media-img" src="data/xo dua.png" alt="image 4">
+      <p class="caption">Sợi xơ dừa<br><i>Ảnh: Châu Nhi</i></p>
+
+      <video playsinline controls>
+        <source src="https://github.com/chaudienoi/bentre/raw/main/WhatsApp%20Video%202025-11-13%20at%206.20.21%20PM%20(1).mp4" type="video/mp4">
+      </video>
+      <video playsinline controls>
+        <source src="https://github.com/chaudienoi/bentre/raw/main/WhatsApp%20Video%202025-11-13%20at%206.20.21%20PM.mp4" type="video/mp4">
+      </video>
+      <p class="caption">Máy móc hoạt động trong nhà máy sản xuất thảm từ xơ dừa<br><i>Video: Nguyễn Hoàng Thiên Ngân</i></p>
+
+      <hr class="poem-hr">
+      <br>
+      <br>
+      <div class="media-block center-80">
+      <img class="media-img" src="data/lvt.png" data-full="data/lvt.png" alt="Field trip photo" data-cover="1">
+      <p class="caption">Một số tài liệu về Lục Vân Tiên tại Lăng Nguyễn Đình Chiểu<br><i>Ảnh: Lập Xuân</i></p>
+      <div class="media-block center-70">
+      <img class="media-img" src="data/bd5.png">
+      <img class="media-img" src="data/bd1.png">
+      <img class="media-img" src="data/bd2.png">
+      <img class="media-img" src="data/bd3.png">
+      <img class="media-img" src="data/bd4.png">
+      <p class="caption">Một số bản đồ Bến Tre tìm thấy trong Bảo tàng Bến Tre, Lăng Nguyễn Đình Chiểu và trên mạng<br></p>
+      </div>
+    </div>
+    <hr class="poem-hr">
+      <br>
+      <br>
+      <img class="media-img" src="data/khoảng cách.png" alt="image 4">
+      <p class="caption">Khu nghỉ võng buổi chiều trong thành phố<br><i>Ảnh: Lập Xuân</i></p>
+    </div>
+  </aside>
+
+
+
+
+
+
+
+
+
+  <!-- RIGHT COLUMN (prose poem) -->
+  <main class="zine-col right">
+    <div class="inner poem-text">
+      <div class="section-title">ánh sáng - nước - không gian</div> 
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-purple">
+          Chúng tôi đến vào mùa nắng,
+      <br>ánh sáng hắt dài trên dòng sông lập loè trong không khí oi bức.
+      <br>
+      <br>Ánh sáng chiều di chuyển theo chuyển động của con nước —
+      <br>không biết ánh sáng sẽ bò lên bờ hay lùi lại theo dòng.
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      Ánh sáng trong rừng mùa khô, 
+      <br><i>không thấy bóng dáng của một con chim nào cả.</i>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+        Trong miếu,<br>ánh sáng tạt dài vào không gian lặng lẽ,<br>chiếu qua các song cửa kéo và trải lên mái ngói.<br>
+      <br>Hướng nhìn của Bà chúa Xứ ra mặt sông,<br>những lấp lánh hắt lên từ dòng kênh do những con sóng lăn tăn tạo nên.<br>
+      <br>Nước mấp mé cầu phao, có khi lên cao tới gối<br>và che luôn con đường xuống phà.
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      Nhà nghỉ ở Giồng Trôm, ngang qua một con lạch nhỏ.
+      <br>ánh sáng nghiêng chiếu vào vách nhà và lá dừa nước, cây bần,
+      <br>đổ lên tường những khoảng bóng tròn mờ.
+      <br>
+      <br>
+      Có vài lần lên trời ngắm sao về đêm,
+      <br>nhưng trời vẫn không đủ tối để thấy được sao.
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+        </div>
+        <div class="tooltip-box">Lưu An</div>
+      </div>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Ban đêm, trước mắt tôi
+        <br>là một màu đen và tấm lưng vuông.
+        <br>
+        <br>Cây chèo thuyền liên tục biến đổi
+        <br>nhờ ánh sáng lốm đốm trên hàng dừa non
+        <br>và một ít ánh đèn mờ nhạt.
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue-right">
+          Các đốm sáng đom đóm thoắt ẩn thoắt hiện.
+          <br><i>Hầu như buổi đêm tôi không cảm nhận được thực tại.</i>
+          <br>
+          <br>Có nhiều hơn một sự vật ở trên xuồng,
+          <br>có thể chứa thêm được chi nữa?
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+          <br>
+          <br>
+          <span class="img-tooltip">
+            <img class="media-img img-tooltip-trigger" src="data/mat062025.png" alt="">
+            <div class="tooltip-box">Tranh vẽ của Châu Nhi</div>
+          </span>   
+          <div class="tooltip-block">
+            <div class="tooltip-trigger poem-blue-right">
+          <br>Cảm giác thiêng liêng
+          <br>và khơi dậy mắt và cơ thể tôi ngày càng rõ hơn.
+          <img src="data/block.png">
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Một căn nhà văn hóa nằm giữa các xưởng vỏ dừa khô.
+         <br>Không có ai bên trong,
+         <br>nhưng tôi cảm nhận đã có người vừa rời đi vào lúc sáng.
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>        
+      </div>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-purple">
+          Ánh nắng buổi sáng tạt xéo vào sào đồ
+        <br>làm cho đồ có cảm giác sạch và sáng hơn.
+        <br>Những món đồ lâu ngày không được chọn
+        <br>gom lại mang đi đốt bỏ —
+        <br>mùi vải cháy nồng lên một góc trời.
+        </div>
+        <div class="tooltip-box">
+          Lưu An
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  <hr class="poem-hr">
+      <div class="tooltip-block">
+        <div class="section-title">cơ thể - vật chất</div>
+        <div class="tooltip-trigger poem-blue">
+          Cây dừa ban đêm tỏa sáng, ban ngày vững chãi,
+          <br>lại có khi uốn éo.
+          <br>Nếu biến thành một người đàn ông thật sự,
+          <br>chắc hẳn anh ta khá nam tính.
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-purple">
+          Chúng tôi chạy vào những khu vườn sâu đằng sau những rặng dừa nước,
+        <br>đứng đợi và báo tin.
+        </div>
+        <div class="tooltip-box">
+          Lưu An
+        </div>
+      </div>
+
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Tôi chưa thấy được con gà đá nào đủ lâu,
+        <br>chỉ thấy những ông chú đằng xa đã tháo chạy.
+      </div>
+      <div class="tooltip-box">
+        Châu Nhi
+      </div>
+    </div>
+        <br>
+        <br>
+        <br>
+        <span class="img-tooltip">
+          <img class=" ga media-img img-tooltip-trigger" src="data/mat1720259.png" alt="">
+          <div class="tooltip-box">Tranh vẽ của Châu Nhi</div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-yellow-right">
+          <img src="data/block.png">
+          Một nắm lá dứa, thảo quả sao vàng, ngò rí,
+        <br>mía lau chẻ nhỏ, râu bắp, cỏ tranh lẻ bạn —
+        <br>those are the recipe of a lòng bàn tay dễ chịu.
+        <br>Hít vào.<br><br><br>
+        <br><i>Cà phê sáng của tôi đâu?</i>
+        <br><br><br>Hít vào.
+      <br>Hồ tiêu và chuối chín — that’s my take of the cardamom.
+      <br>Mớ thịt bò khô từ tối qua quá cay làm tôi đau bụng.
+      <br>Mùi rau củ trong lòng bàn tay
+      <br>và cà phê sữa ở đây
+      <br>là một combo dễ chịu.
+      <br>Will ever a space be making me feel safer
+      <br>than the fragrant of the kitchen
+      <br>sót lại giữa lòng bàn tay ấm.
+        <br>...
+        </div>
+        <div class="tooltip-box">
+          Kai Nguyễn
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-pink">
+          Gỗ dừa rất khó để gia công vì đặc tính cứng và giòn,
+        <br>có khả năng dao động và cộng hưởng kém nên âm lượng nhỏ và không vang;
+        <br>cách khắc phục là gắn thêm hệ thống lò xo.
+      </div>
+      <div class="tooltip-box">
+        Nhật Quang
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+        <span class="img-tooltip">
+          <img class=" media-img img-tooltip-trigger" src="data/20251105_102510.png" alt="">
+          <div class="tooltip-box">Sketch của Nhật Quang</div>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-pink">
+        <br>Hộp đàn và đầu đàn
+        <br>được chạm khắc thành hình thù nhiều động vật phong phú.
+        <br>
+        <br>Vỏ trái dừa khi được phơi khô và đổ keo 502
+        <br>sẽ trở thành vật liệu siêu bền,
+        <br>có khả năng chịu va đập
+        <br>và được thay đổi nhiệt độ đột ngột.
+      </div>
+      <div class="tooltip-box">
+        Nhật Quang
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <audio class="mini-audio tooltip-trigger" controls preload="metadata">
+      <source src="https://github.com/chaudienoi/bentre/raw/main/Vocaroo%201bWT3aqugMMu.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="tooltip-box audio-tip">
+      Ghi âm nhạc cụ bằng dừa (Sáo sọ) — Nhật Quang
+    </div>
+    
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Cuộn xơ dừa —
+        <br>nhiều tấm cuộn dài cả mét,
+        <br>mềm mại như cuộn len hút hết sự ấm áp có ở trong đó.
+        <br>
+        <br>Cọc nạo dừa đã khá có tuổi —
+        <br>hay là những mảnh vải bên ngoài đã khá có tuổi?
+        <br>Thứ nào già hơn?
+        <br>
+        <br>Găng tay, bông phía bên trong không chịu đựng được nữa mà tuôn trào,
+        <br>hoạt động ngầm như khói núi lửa.
+        <br>
+        <br>
+        <br>Bao xơ dừa nằm ục ịch ở góc xưởng.
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-green">
+          Xơ dừa chống lại việc trở thành mặt phẳng.
+        <br>Khi ép, nó rạn. Khi treo, nó giãn.
+        <br>Tôi buộc phải dùng nó như khối, không như giấy.
+        <br>
+        <br>Giấy xơ dừa màu trắng sữa như cơm dừa,
+        <br>mềm, bở, dễ rách —
+        <br>tôi trông giống một món ăn hơn là chất liệu để vẽ lên.
+      </div>
+      <div class="tooltip-box">
+        Lập Xuân
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <span class="img-tooltip">
+      <img class="media-img img-tooltip-trigger" src="data/IMG_7416.png" alt="">
+      <div class="tooltip-box">thử nghiệm của Lập Xuân với giấy xơ dừa</div>
+      
+        
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Âm thanh vang vọng khắp xưởng dừa.
+          <br>Không đồ bảo hộ.         
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-purple">
+          Không khí trong xưởng luôn khô và nóng, 
+        <br>ánh sáng ấm giòn đều như mặt đường buổi trưa, 
+        <br>phả bụi lên từng nhịp chặt. 
+        </div>
+        <div class="tooltip-box">
+          Lưu An
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-blue">
+          Những cú chặt giòn tan.
+      <br>
+      <br>
+      <br>
+        <br>Thứ xơ vú của dừa ngày càng to ra,
+        <br>nhồi nhét vào mũi tôi.
+        <br>
+        <br>Tôi có thể chết vì bội thực khứu giác.
+        </div>
+        <div class="tooltip-box">
+          Châu Nhi
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <hr class="poem-hr">
+    <div class="tooltip-block">
+      <div class="section-title">ngôn ngữ - địa hình</div>
+      <div class="tooltip-trigger poem-green">
+        Lục Vân Tiên trong vùng này là một thực hành nghe,
+      <br>không chỉ là văn bản.
+      <br> Tính Nôm giữ bằng giọng đọc, không phải bằng mặt chữ.
+      <br>
+      <br>Hát thơ Lục Vân Tiên phản ánh cách ngôn ngữ và cảnh quan hòa lẫn,
+      <br>nơi giọng nói trở thành một phần của không gian sông nước.
+      <br>
+      <br>Sự khác biệt giữa <i><strong>giữ</strong></i> và <i>dữ</i>
+      <br>là một thay đổi nhỏ
+      <br>nhưng mở ra cả một âm vực vùng miền.
+    </div>
+    <div class="tooltip-box">
+      Lập Xuân
+    </div>
+  </div>
+  <br>
+ <br>
+ <br>
+      <span class="img-tooltip">
+        <img class="media-img img-tooltip-trigger" src="data/IMG_5004.png" alt="">
+        <div class="tooltip-box">thử nghiệm của Lập Xuân trên xơ dừa</div>
+      </span>   
+      <br>
+      <div class="tooltip-block">
+        <div class="tooltip-trigger poem-green">
+      <br>Cộng đồng xưa tiếp nhận nghĩa qua âm thanh,
+      <br>qua giọng nói và cách ngân nga —
+      <br>một hình thức học hỏi tự thân.
+      <br>
+      <br>Khi chữ viết chỉnh sửa tiếng nói,
+      <br>điều gì của vùng đất sẽ biến mất đầu tiên?
+      <br>
+      <br>Ngôn ngữ giống biến động nhẹ của kênh rạch,
+      <br>tạo ra vô số “lối rẽ” của nghĩa.
+      <br>
+      <br>
+      <br>
+      <br>Bản đồ như một lớp đọc:
+      <br>du lịch, ngập mặn, chiến khu —
+      <br>địa hình Bến Tre không đứng yên.
+      <br>
+      <br>Gò, giồng, cồn, cù lao —
+      <br>những từ chỉ địa hình
+      <br>cũng là cách đất ghi lại chuyển động chậm.
+      <br>
+      <br>Phù sa là người kể chuyện chính.
+      <br>
+      <br>Tri trong tài liệu cũ nghĩa là “ở”, “nơi tụ lại”.
+      Ba Tri: nơi tụ hợp, bến tàu, vùng có ký ức tị địa của các nhân sĩ.
+          </div>
+          <div class="tooltip-box">
+            Lập Xuân
+          </div>
+        </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <hr class="poem-hr">
+      <div class="tooltip-block">
+        <div class="section-title">khoảng cách</div>
+        <div class="tooltip-trigger poem-green">
+          Khoảng cách lỏng
+        <br>giữa người và vật,
+        <br>giữa nơi này với nơi khác —
+        <br>luôn xa hơn thực tế.
+        <br>
+        <br>Năng lượng không căng thẳng,
+        <br>nhưng khiến người ta mệt nếu cố chống lại.
+        <br>Nhiều khoảng trống tồn tại
+        <br>như thể không cần phải lấp đầy.
+            </div>
+            <div class="tooltip-box">
+              Lập Xuân
+            </div>
+          </div>
+    </div>
+
+  </main>
+
+
+  <!-- HEADER -->
+<header class="simple-header">
+  <div class="h-left">
+    <a href="index.html">đất - nước - mình | walking water</a>
+  </div>
+  <div class="h-right">
+    <a href="index.html">một bài tập | a sensual excercise with the land</a>
+  </div>
+</header>
+<!-- FOOTER -->
+<footer class="simple-footer">
+  <div class="f-left">
+    <a href="/index.html">Về dự án</a>
+  </div>
+  <div class="f-right">
+    <a href="/info.html">Về Zine</a>
+  </div>
+</footer>
+
+
+<!-- MODAL CONTAINERS (giữ hidden, dùng lại khi cần) -->
+<div id="page-modal" class="page-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="page-modal__backdrop" data-close></div>
+  <div class="page-modal__panel" role="document">
+    <button class="page-modal__close" aria-label="Close (Esc)" data-close>&times;</button>
+    <div class="page-modal__content" id="page-modal-content">
+      <!-- Nội dung sẽ nằm ở đây (Project hoặc Credits) -->
+      <h2>About the Project</h2>
+      <p>Ví dụ nội dung Project — thay bằng nội dung thực của bạn.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Nếu bạn muốn 2 modal riêng (không cần) bạn có thể duplicate; ở đây mình dùng 1 modal tái sử dụng -->
+
+<script>
+  (function(){
+    // đảm bảo chạy 1 lần
+    if (window.__PAGE_MODAL_LOADED) return;
+    window.__PAGE_MODAL_LOADED = true;
+  
+    const modal = document.getElementById('page-modal');
+    if (!modal) {
+      console.warn('page-modal element not found. Please add modal markup to the page.');
+      return;
+    }
+    const panel = modal.querySelector('.page-modal__panel');
+    const contentBox = modal.querySelector('#page-modal-content') || modal.querySelector('.page-modal__content');
+    const closeBtns = modal.querySelectorAll('[data-close], .page-modal__close');
+  
+    // NỘI DUNG — chỉnh sửa trực tiếp ở đây nếu cần
+    const PAGE_CONTENT = {
+      project: `
+        <h2>đất - nước - mình: một bài tập</h2>
+        <p><i>Walking water — a sensual exercise with the land</i><br>Bến Tre, 3/2025 &amp; 12/2025</p>
+  
+        <p><strong>Tổng quan</strong></p>
+        <p>Dự án đề xuất thực hiện hai “bài tập cơ bản” trong các chuyến đi thực địa:</p>
+        <ul>
+          <li><strong>Cảm nhận</strong>: nghiên cứu thiên nhiên, đời sống con người và xã hội tại địa phương thông qua trải nghiệm cơ thể — lưu trú, điền dã, quan sát, nghe, cảm nhận, phỏng đoán.</li>
+          <li><strong>Tư liệu</strong>: lưu giữ và trao đổi ghi chép, phác hoạ, ghi âm/hình, lượm đồ vật/chất liệu, và trưng bày tư liệu.</li>
+        </ul>
+  
+        <p><strong>Nghệ sĩ (Việt Nam)</strong>: Huế — Trần Châu Nhi; Sài Gòn — Đỗ Nguyễn Lập Xuân, Lưu An, Kai Nguyễn (3nămstudio / Invisible Space); Hà Nội — Nguyễn Nhật Quang.</p>
+  
+        <p>Chuyến đi 12/2025 sẽ diễn ra cùng các nghệ sĩ Kim Bode và Kallia Kefala (Berlin).</p>
+  
+        <p><strong>Zine / Điều phối / Giám tuyển</strong></p>
+        <ul>
+          <li>Zine: Châu Hoàng (Á Space)</li>
+          <li>Điều phối: Nguyễn Hoàng Thiên Ngân, Nhật Q. Võ (Nguyễn Art Foundation)</li>
+          <li>Giám tuyển: Nguyễn Quốc Thành (Nhà Sàn Collective), Châu Hoàng (Á Space)</li>
+        </ul>
+  
+        <p><i>Dự án hợp tác giữa Nhà Sàn Collective và District Berlin bắt nguồn từ các trao đổi của Nguyễn Phương Linh và Nguyễn Quốc Thành với Susanne Husse (District Berlin), nhằm thực hiện chương tiếp theo của d-EST — nền tảng video trực tuyến queer / hậu xã hội chủ nghĩa do District Berlin khởi xướng.</i></p>
+  
+        <hr>
+  
+        <h3>Tiểu sử</h3>
+  
+        <p><strong>Lưu An</strong> là nghệ sĩ độc lập, nghệ sĩ vẽ minh hoạ và người tổ chức nghệ thuật. Cuối năm 2022, Lưu An sáng lập Vẫn Đang Suy Nghĩ Space, — một dự án mở gồm các workshops, chiếu phim, thực hành nghệ thuật, và thảo luận trong cộng đồng nghệ thuật &amp; queer.</p>
+  
+        <p><strong>Nhật Q. Võ</strong> là một nhà hoạt động văn hóa và thiết kế đa ngành. Quan tâm đến việc tạo dựng sân chơi giáo dục và thúc đẩy phát triển nền văn hoá nghệ thuật địa phương, thực hành của anh bao gồm tổ chức, điều phối, sản xuất, và giám tuyển. Nhật từng quản lý không gian Sàn Art và hiện là Quản lý tổ chức Nguyễn Art Foundation.</p>
+  
+        <p><strong>Đỗ Nguyễn Lập Xuân</strong> là nhà nghiên cứu & giáo dục nghệ thuật, với thực hành nghệ thuật khám phá tri thức được tạo nên từ thực hành cộng đồng, và các chủ đề về bản sắc, dịch chuyển, cách ly và sự hiện hữu lưng chừng.</p>
+  
+        <p><strong>Kai Nguyễn</strong> là nghệ sĩ thị giác (hình ảnh động, thơ, sắp đặt). Thực hành của Kai hiện tập trung vào cây cối, ký ức và mối liên hệ của chúng với đời sống thường nhật; là một nghệ sĩ queer, Kei xem những thực hành nhỏ nhẹ &amp; tình cảm của mình như một chiến lược mềm len lỏi giữa bạo lực &amp; tính thẳng.</p>
+  
+        <p><strong>Trần Châu Nhi</strong> (Huế, b.2002) đang là hoạ sĩ/sinh viên chuyên ngành Hội Hoạ học tại đại học Mỹ thuật Huế. Thực hành của Nhi luôn tìm kiếm sự hiện diện của tính duy mỹ trong những giác quan, cùng với trí tưởng tượng và cuối cùng là tư liệu hóa qua các tác phẩm. Nhi quan tâm đến không gian, chất liệu và tính biểu đạt khi tạo ra một tác phẩm.</p>
+        <p><strong>Nguyễn Nhật Quang</strong>  Nguyễn Nhật Quang lớn lên tại Hà Nội, câu cá ven hồ Tây và chơi nhạc cụ tự chế. Từng theo học khoa Lý luận Sáng tác Chỉ huy tại Học Viện Âm nhạc Việt Nam và là thành viên của Hanoi Collective Orchestra, Quang sớm gắn bó với các dự án âm nhạc và nghệ thuật. </p>
+  
+        <p><strong>Nguyễn Hoàng Thiên Ngân</strong> là một người dịch sinh sống tại Hà Nội. Ngân đã đồng hành cùng nhiều dự án nghệ thuật, điện ảnh và văn chương.</p>
+  
+        <p><strong>Châu Hoàng</strong> là giám tuyển nghệ thuật hiện đang sống và làm việc tại Hà Nội. Thực hành của cô tập trung vào việc khai thác các khả thể của triển lãm và sáng tạo nghệ thuật cũng như khảo sát cách ngôn ngữ thị giác phản ánh và đặt câu hỏi về các lĩnh vực đa dạng của cuộc sống. Năm 2024, cô trở thành thành viên Ban giám tuyển Á Space.</p>
+  
+        <p><strong>Nguyễn Quốc Thành</strong> là nghệ sĩ, giám tuyển; đồng sáng lập Nhà Sàn Collective; sáng lập liên hoan Queer Forever! (từ 2013) - một dự án rạp chiếu phim tự phát, zine và cộng đồng kéo dài nhiều năm. </p>
+      `,
+  
+      zine: `
+        <h2>Về tập Zine</h2>
+        <p>Tập Zine này được thiết kế như một cấu trúc hai lớp vận hành song song.</p>
+  
+        <p>Lớp thứ nhất gồm ảnh và video được thu thập trong quá trình thực địa tại Bến Tre. Các tư liệu phản ánh điều kiện ánh sáng, âm thanh và chuyển động của những không gian mà nhóm đã đi qua.
+</p>
+  
+        <p>Lớp thứ hai là văn bản được biên tập từ ghi chép và quá trình quan sát, cảm nhận của các nghệ sĩ: những mô tả ngắn, các chi tiết về ánh sáng, chất liệu, âm thanh, thao tác với vật liệu và những phản ứng cơ thể trong cảnh quan. Văn bản không đi theo trình tự hành trình, mà tập hợp những đoạn ghi chép rời và các quan sát được hình thành trong suốt quá trình làm việc, nhằm gợi lại cách cơ thể tiếp xúc, cảm nhận và lưu giữ không gian.
+</p>
+  
+        <p>Hai lớp này không minh hoạ cho nhau.</p>
+        <p>Chúng vận hành như hai dòng chảy đặt cạnh nhau.</p>
+        <p>Khi đọc, người xem có thể đi theo một tuyến hoặc để hai tuyến giao nhau — giống cách ánh sáng, nước và vật liệu liên tục chồng lớp trong hành trình thực địa.</p>
+        <hr>
+        <p><strong>Chất liệu của zine được biên tập từ documentation và ghi chép của các nghệ sĩ:</strong> Trần Châu Nhi, Đỗ Nguyễn Lập Xuân, Lưu An, Kai Nguyễn, Nguyễn Nhật Quang.</p>
+      `
+    };
+  
+    // open / close helpers
+    function openModal(key){
+      if (!PAGE_CONTENT[key]) return;
+      contentBox.innerHTML = PAGE_CONTENT[key];
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden','false');
+      // lock page scroll while modal open
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      // focus close btn if exists
+      const btn = modal.querySelector('.page-modal__close');
+      if (btn) btn.focus();
+    }
+  
+    function closeModal(){
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden','true');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  
+    // find footer links (adapt selectors if your markup differs)
+    const projectLink = document.querySelector('.simple-footer .f-left a');
+    const zineLink = document.querySelector('.simple-footer .f-right a');
+  
+    if (projectLink){
+      projectLink.addEventListener('click', function(e){
+        e.preventDefault();
+        openModal('project');
+      });
+    }
+    if (zineLink){
+      zineLink.addEventListener('click', function(e){
+        e.preventDefault();
+        openModal('zine');
+      });
+    }
+  
+    // close buttons / backdrop
+    closeBtns.forEach(btn => btn.addEventListener('click', closeModal));
+    const backdrop = modal.querySelector('[data-close]') || modal.querySelector('.page-modal__backdrop');
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+  
+    // ESC key
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  
+  })();
+  </script>
+  
+  
+
+<script>
+  (function(){
+    // đảm bảo chỉ có một overlay trong body
+    let overlay = document.getElementById('lightbox-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'lightbox-overlay';
+      overlay.innerHTML = '<img id="lightbox-img" alt="Enlarged image">';
+      document.body.appendChild(overlay);
+    }
+    const bigImg = document.getElementById('lightbox-img');
+  
+    // open
+    function openLightbox(src, opts = {}) {
+  bigImg.src = src;
+  if (opts.cover) overlay.classList.add('cover'); else overlay.classList.remove('cover');
+  overlay.classList.add('active');
+  // KHÔNG khóa scroll của body — scroll sẽ xảy ra trong overlay
+}
+  
+    // close
+    function closeLightbox(){
+      overlay.classList.remove('active');
+      bigImg.src = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  
+    // click overlay closes
+    overlay.addEventListener('click', (e)=>{
+      // if click directly on image also close
+      closeLightbox();
+    });
+  
+    // ESC to close
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'Escape') closeLightbox();
+    });
+  
+    // attach to images (callable again)
+    function attach() {
+      const imgs = document.querySelectorAll('.media-img, .zoom-img, img.thumb, img[data-lightbox], img[data-full]');
+      imgs.forEach(img=>{
+        if (img.dataset.lbBound) return;
+        img.dataset.lbBound = '1';
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', (ev)=>{
+          ev.preventDefault();
+          // prefer data-full (hi-res). If attribute data-full exists, use it.
+          const src = img.dataset.full || img.getAttribute('data-full') || img.src;
+          // nếu muốn ảnh phủ che full (crop) set data-cover="1" trên image
+          const cover = img.dataset.cover === "1";
+          openLightbox(src, { cover });
+        });
+      });
+    }
+  
+    attach();
+  
+    // observe new images added later
+    const mo = new MutationObserver(()=> attach());
+    mo.observe(document.body, { childList: true, subtree: true });
+  })();
+  </script>
+
+<script>
+  (function(){
+    // bảo đảm chỉ chạy 1 lần
+    if (window.__SIMPLE_TOOLTIP_LOADED) return;
+    window.__SIMPLE_TOOLTIP_LOADED = true;
+  
+    // Tìm hộp tooltip tương ứng với trigger
+    function findBox(trigger){
+      if (!trigger) return null;
+      let s = trigger.nextElementSibling;
+      if (s && s.classList && s.classList.contains('tooltip-box')) return s;
+      if (trigger.parentElement){
+        s = trigger.parentElement.querySelector('.tooltip-box');
+        if (s) return s;
+      }
+      const block = trigger.closest('.tooltip-block');
+      if (block){
+        s = block.querySelector('.tooltip-box');
+        if (s) return s;
+      }
+      return null;
+    }
+  
+    // đặt vị trí, giữ trong viewport
+    function place(box, x, y){
+      if (!box) return;
+      const pad = 10;
+      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  
+      // đo kích thước (hiện tạm để đo)
+      box.style.left = '-9999px';
+      box.style.top = '-9999px';
+      box.classList.add('visible'); // để đo được kích thước
+      const rect = box.getBoundingClientRect();
+      // tính vị trí
+      let left = x + pad;
+      let top = y + pad;
+      if (left + rect.width + 8 > vw) left = x - pad - rect.width;
+      if (left < 8) left = 8;
+      if (top + rect.height + 8 > vh) top = y - pad - rect.height;
+      if (top < 8) top = 8;
+      box.style.left = left + 'px';
+      box.style.top = top + 'px';
+    }
+  
+    // show / hide
+    function show(box, x, y){
+      if (!box) return;
+      place(box, x, y);
+      box.classList.add('visible');
+    }
+    function hide(box){
+      if (!box) return;
+      box.classList.remove('visible');
+      // keep left/top as-is (no need to reset)
+    }
+  
+    // attach to triggers
+    function attach(){
+      const triggers = document.querySelectorAll('.tooltip-trigger, .img-tooltip-trigger');
+      triggers.forEach(trigger=>{
+        if (trigger.dataset._ttBound) return;
+        trigger.dataset._ttBound = '1';
+  
+        const box = findBox(trigger);
+        if (!box) return;
+  
+        // mouse
+        let raf = null;
+        let latest = null;
+        function onMove(e){
+          latest = e;
+          if (raf) return;
+          raf = requestAnimationFrame(()=>{
+            raf = null;
+            show(box, latest.clientX, latest.clientY);
+          });
+        }
+        function onEnter(e){
+          show(box, e.clientX, e.clientY);
+        }
+        function onLeave(){
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+          hide(box);
+        }
+        trigger.addEventListener('mousemove', onMove);
+        trigger.addEventListener('mouseenter', onEnter);
+        trigger.addEventListener('mouseleave', onLeave);
+  
+        // touch: tap to show briefly (mobile)
+        trigger.addEventListener('touchstart', function(e){
+          // prevent synthetic mouse events
+          e.stopPropagation();
+          const r = trigger.getBoundingClientRect();
+          show(box, r.left + r.width/2, r.top + r.height/2);
+          const hideNow = ()=> hide(box);
+          document.addEventListener('touchstart', hideNow, { once: true, passive: true });
+          setTimeout(hideNow, 2000);
+        }, { passive: true });
+      });
+    }
+  
+    attach();
+    // observe DOM changes so dynamically added content gets tooltips too
+    const mo = new MutationObserver(attach);
+    mo.observe(document.body, { childList: true, subtree: true });
+  })();
+  </script>
+  
+  
+</body>
+</html>
