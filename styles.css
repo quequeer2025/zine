@@ -529,3 +529,48 @@ body {
   background: #f9f8f4;
 }
 
+/* -------------------------
+   Mobile / small screens
+   ------------------------- */
+@media (max-width: 900px) {
+
+  /* 1) Ẩn vertical divider (được add bởi body::before hoặc zine-container::after) */
+  body::before,
+  .zine-container::after {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* 2) Stack two columns vertically, cho phép chiều cao tự nhiên */
+  .zine-container {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible; /* cho phép nội dung kéo dài */
+  }
+
+  .zine-col {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;        /* không khống chế 100vh trên mobile */
+    padding: 20px 16px !important;  /* giảm padding để vừa màn hình */
+    box-sizing: border-box;
+  }
+
+  /* 3) Tránh header/footer che nội dung khi padding thay đổi */
+  body { padding-top: 56px; padding-bottom: 56px; }
+
+  /* 4) Nếu bạn dùng một vertical rule trong header/footer, đảm bảo không bị hiển thị */
+  .simple-header, .simple-footer {
+    z-index: 1005; /* keep over content; body::before already hidden */
+  }
+
+  /* 5) Nếu có overlay vertical line cần ẩn (nếu bạn dùng #some-divider) */
+  #some-divider, .vertical-divider { display: none !important; }
+
+  /* 6) Tweak images / media so they fit mobile */
+  .left-inner, .zine-col .inner { max-width: 100% !important; padding: 0 !important; }
+  .zine-col img, .zine-col video { max-width: 100%; height: auto; }
+
+}
+
