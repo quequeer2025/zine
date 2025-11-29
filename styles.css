@@ -1,31 +1,23 @@
 /* BASE RESET */
 * { box-sizing: border-box; }
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  /* NOTE: avoid blocking horizontal scroll globally; allow override on desktop */
-  overflow-x: hidden;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
+html,body { height:100%; margin:0; padding:0; overflow-x: hidden; font-family: "Helvetica Neue", Arial, sans-serif; }
 
 body {
   background: #ffffff !important;
 }
-
 /* ZINE CONTAINER */
 .zine-container {
   position: relative;
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  overflow: hidden; /* default desktop: chặn horizontal scroll */
+  overflow: hidden; /* chặn horizontal scroll */
   background: #f9f8f4;
 }
 
 /* Vertical divider (giữa hai cột) */
 .zine-container::after {
-  display: block;
+  display: none;
   content: "";
   position: absolute;
   top: 0;
@@ -37,9 +29,9 @@ body {
   pointer-events: none;
 }
 
-/* CÁC CỘT: KHÓA CHÍNH XÁC 50% (desktop) */
+/* CÁC CỘT: KHÓA CHÍNH XÁC 50% */
 .zine-col {
-  flex: 0 0 50vw;
+  flex: 0 0 50vw;      /* CHÌA KHÓA: cố định bằng viewport width */
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -47,14 +39,16 @@ body {
   padding: 40px;
 }
 
+
 /* background riêng cho từng cột nếu cần */
 .zine-col.left { padding: 6px; background: #ffffff; color: #111; }
 .zine-col.right { padding: 6px; background: #ffffff; color: #111; }
 
+
 /* INNER content để giới hạn width thực tế của text và media */
 .left-inner {
-  max-width: calc(50vw - 80px);
-  margin: 0;
+  max-width: calc(50vw - 80px); /* đảm bảo không vượt ngoài cột */
+  margin: 0; /* nếu muốn căn trái, để margin 0; dùng auto để căn giữa */
 }
 
 /* Ảnh / video fit cột */
@@ -72,25 +66,83 @@ body {
 /* CỘT PHẢI — inner để giới hạn text width và padding cho lề */
 .zine-col.right .inner {
   max-width: 640px;
-  margin: 0 auto;
+  margin: 0 auto;           /* căn giữa trong cột */
   padding-left: 8px;
-  padding-right: 30px;
+  padding-right: 30px;      /* khoảng an toàn bên phải */
   line-height: 1.9;
   font-size: 20px;
   font-family: "Cormorant Garamond", serif;
 }
 
+/* Các đoạn (seg) */
+.poem-text .seg { margin-bottom: 36px; }
+
+/* stanza / lines */
+.poem-text .stanza .line { margin: 0 0 8px 0; }
+
+/* pullquote */
+.poem-text .pullquote {
+  font-size: 28px;
+  line-height: 2;
+  font-weight: 600;
+  padding-left: 18px;
+  border-left: 3px solid rgba(0,0,0,0.06);
+}
+
+/* text align right */
+.poem-text .righttext { text-align: right; }
+
+/* small meta */
+.poem-text .meta { font-size: 13px; color:#666; margin-top: 10px; }
+
 /* HIDE horizontal overflow for inner content */
 .zine-col > * { max-width: 100%; }
 
-/* Tooltip / poem sizes (giữ nguyên) */
-.poem-purple, .poem-blue, .poem-blue-right, .poem-green, .poem-yellow, .poem-pink, .poem-yellow-right {
+/* RESPONSIVE: chuyển stack trên mobile */
+@media (max-width: 900px) {
+  .zine-container { flex-direction: column; height: auto; }
+  .zine-container::after { display: none; }
+  .zine-col { flex-basis: auto; width: 100%; height: auto; padding: 24px; }
+  .left-inner { max-width: 100%; }
+  .zine-col.right .inner { max-width: 100%; margin: 0; padding-right: 0; padding-left: 0; font-size: 18px; line-height: 1.6; }
+}
+.poem-purple {
   font-size: 18px;
   line-height: 2.5;
 }
-.poem-blue-right, .poem-yellow-right { text-align: right; }
+.poem-blue {
+  font-size: 18px;
+  line-height: 2.5;
+}
+.poem-blue-right {
+  font-size: 18px;
+  line-height: 2.5;
+  text-align: right;
+  }
 
-/* thumbnail styles */
+  .poem-green {
+  font-size: 18px;
+  line-height: 2.5;
+  }
+
+.poem-yellow {
+  font-size: 18px;
+  line-height: 2.5;
+  }
+
+.poem-pink {
+  font-size: 18px;
+  line-height: 2.5;
+  }
+
+.poem-yellow-right {
+  font-size: 18px;
+  line-height: 2.5;
+  text-align: right;
+  width: 100% !important;
+  }
+
+  /* Ảnh nhỏ trong cột */
 .thumb {
   width: 60%;
   cursor: zoom-in;
@@ -98,16 +150,168 @@ body {
 }
 .thumb:hover { opacity: 0.8; }
 
-/* various helper classes (kept) */
-.media-block { display: block; margin-bottom: 24px; }
-.media-block.center-80 { width: 80%; margin-left: auto; margin-right: auto; }
-.media-block.center-70 { width: 70%; margin-left: auto; margin-right: auto; }
-.media-block.center-50 { width: 50%; margin-left: auto; margin-right: auto; }
-.media-block.center-100 { width: 100%; margin-left: auto; margin-right: auto; }
+/* POPUP OVERLAY */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
-/* POEM HR, section title, etc. keep as your design */
-.poem-hr { border: 0; border-top: 1px solid rgba(0,0,0,0.15); margin: 24px 0; }
-.section-title { font-family: "Cormorant Garamond", serif; font-size: 35px; font-style: italic; font-weight: bold; margin: 10px 0 50px 0; line-height: 1.3; }
+#lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Khi active */
+#lightbox.active {
+  display: flex;
+  cursor: zoom-out;
+}
+
+
+.zine-col.left img.media-img.centered {
+  width: 40%;
+  width: auto !important;
+  max-width: 100% !important;
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* HÀNG ẢNH DỌC NHIỀU CỘT */
+.img-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 6px;                 /* khoảng cách giữa ảnh */
+  margin: 20px 0;
+}
+
+.img-row img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.caption {
+  margin-top: 8px;
+  margin-bottom: 100px;
+  }
+
+
+.view-link {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* ẢNH cách mép cột 3px mỗi bên */
+/* Mặc định: ảnh/media full-width nhưng CÓ THỂ override */
+.zine-col.left img.media-img,
+.zine-col.left video.media-img {
+  display: block;
+  width: calc(100% - 6px);
+  margin: 0 3px 14px 3px;
+  height: auto;
+}
+.media-block {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.media-block.center-80 {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.media-block.center-70 {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.media-block.center-50 {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.media-block.center-100 {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* BLOCK TOOLTIP — bao trọn nhiều dòng, nhiều <br>, nhiều kiểu poem */
+.tooltip-block {
+  position: relative;
+  display: inline-block;    /* để tooltip gắn đúng vào khối text */
+}
+
+/* Phần text được hover */
+.tooltip-trigger {
+  cursor: pointer;
+}
+
+/* BLOCK TOOLTIP */
+.tooltip-block {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-trigger {
+  cursor: pointer;
+}
+
+.tooltip-box {
+  position: fixed;       /* QUAN TRỌNG: để đi theo chuột */
+  pointer-events: none;  /* không bắt hover */
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 260px;
+  z-index: 9999;
+  display: none;
+}
+
+.mini-audio {
+  width: 100%;
+  max-width: 360px;
+  display: block;
+  margin: 12px 0;
+  border-radius: 0 !important;   /* ép player vuông */
+}
+
+.poem-hr {
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,0.15);
+  margin: 24px 0;
+}
+
+.section-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 35px;
+  font-style: italic;
+  font-weight: bold;
+  margin: 10px 0 50px 0; /* sát lên & xuống */
+  line-height: 1.3;
+}
+
+.ga {
+  width: 80%;
+}
+
+.small-text {
+  font-size: 14px;
+}
 
 /* ===== Vertical divider xuyên suốt header / content / footer ===== */
 body::before {
@@ -117,95 +321,211 @@ body::before {
   bottom: 0;
   left: 50%;
   width: 1px;
-  background: rgba(0,0,0,0.08);
+  background: rgba(0,0,0,0.08);   /* chỉnh độ đậm ở đây */
   transform: translateX(-0.5px);
-  z-index: 10050;
-  pointer-events: none;
+  z-index: 10050;                 /* phải lớn hơn z-index header/footer */
+  pointer-events: none;           /* không chặn click */
 }
 
-/* simple header/footer */
-.simple-header, .simple-footer {
+/* ===== Simple header / footer (nền trắng, chỉ có 1 line) ===== */
+.simple-header,
+.simple-footer {
   position: fixed;
   left: 0;
   right: 0;
-  height: 24px;
+  height: 24px;                   /* chỉnh cao thấp nếu cần */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 6px 14px;
   box-sizing: border-box;
-  background: #ffffff;
-  z-index: 1000;
+  background: #ffffff;            /* nền trắng */
+  z-index: 1000;                  /* thấp hơn body::before */
   font-family: "Cormorant Garamond", serif;
   font-size: 20px;
 }
+
+/* header có đường kẻ dưới mảnh, footer có đường kẻ trên mảnh */
 .simple-header { top: 0; border-bottom: 1px solid rgba(0,0,0,0.10); }
 .simple-footer { bottom: 0; border-top: 1px solid rgba(0,0,0,0.10); }
 
-/* avoid header/footer covering content */
-body { padding-top: 46px; padding-bottom: 46px; }
-
-/* lightbox overlay (kept) */
-#lightbox-overlay { position: fixed !important; inset: 0 !important; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.82) !important; z-index: 9999999 !important; }
-
-/* TOOLTIP box default kept */
-.tooltip-box { position: fixed; pointer-events: none; padding: 8px 12px; background: #ffffff; border: 1px solid #ccc; box-shadow: 0 4px 10px rgba(0,0,0,0.12); font-size: 14px; line-height: 1.5; max-width: 260px; z-index: 9999; display: none; }
-
-/* PAGE MODAL kept */
-.page-modal { position: fixed; inset: 0; display: none; z-index: 20000; font-family: "Cormorant Garamond", serif; }
-/* ... other page-modal rules remain as before ... */
-
-/* -------------------------
-   MOBILE: keep two columns side-by-side OR allow swipe
-   ------------------------- */
-@media (max-width: 900px) {
-
-  /* allow horizontal scroll on page so container can scroll */
-  html, body {
-    overflow-x: auto; /* override desktop hidden so container can be scrolled */
-  }
-
-  /* Container: hai cột nằm cạnh nhau, enable horizontal scroll */
-  .zine-container {
-    flex-direction: row !important;
-    min-width: 200vw !important;    /* 2 x 100vw -> cho phép cuộn ngang */
-    width: auto !important;
-    height: 100vh;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-  }
-
-  /* Mỗi cột chiếm toàn bộ viewport */
-  .zine-col {
-    flex: 0 0 100vw !important;
-    min-width: 100vw !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-align: center;
-    box-sizing: border-box;
-    touch-action: pan-y;
-    padding: 24px;
-  }
-
-  /* inner sizing adjustments */
-  .left-inner { max-width: calc(100vw - 80px) !important; }
-  .zine-col.right .inner { max-width: 100% !important; padding-left: 18px; padding-right: 18px; font-size: 18px; line-height: 1.6; }
-
-  /* hide vertical divider on mobile to avoid visual cut */
-  body::before, .zine-container::after { display: none !important; }
-
-  /* header/footer slightly larger on mobile */
-  .simple-header, .simple-footer { height: 40px; padding: 8px 10px; font-size: 11px; }
-  body { padding-top: 56px; padding-bottom: 56px; }
-
-  /* Show the lightbox overlay as block when active */
-  #lightbox-overlay.active { display: flex !important; align-items: flex-start !important; overflow: auto !important; padding: 24px 12px !important; }
-  #lightbox-overlay img { max-width: 98vw !important; max-height: none !important; height: auto !important; width: auto !important; }
-
+/* link style: không decoration, hover chỉ pointer */
+.simple-header a,
+.simple-footer a {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 4px 6px;
 }
+.simple-header a:hover,
+.simple-footer a:hover { text-decoration: none; cursor: pointer; }
+
+/* tránh nội dung bị che bởi header/footer */
+body {
+  padding-top: 46px;    /* = header height (36) + 10px breathing */
+  padding-bottom: 46px; /* = footer height + breathing */
+}
+
+/* Responsive nhỏ: giảm height/padding */
+@media (max-width: 900px) {
+  .simple-header, .simple-footer { height: 40px; padding: 8px 10px; font-size:11px; }
+  body { padding-top: 56px; padding-bottom: 56px; }
+}
+
+
+/* overlay cho phép scroll nội bộ */
+#lightbox-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;      /* cho phép scroll vertical */
+  justify-content: center !important;
+  padding: 24px 12px;                      /* khoảng "breathing" khi scroll */
+  overflow: auto !important;               /* CHÍNH: cho phép scroll */
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0,0,0,0.82) !important;
+  z-index: 9999999 !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .20s ease;
+}
+
+/* visible */
+#lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ảnh: giữ contain nhưng có thể lớn hơn viewport (scroll thấy phần thừa) */
+#lightbox-overlay img {
+  max-width: 98vw !important;
+  max-height: none !important;   /* cho phép ảnh vượt viewport chiều cao */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6) !important;
+  cursor: zoom-out !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* nếu bạn muốn ảnh vẫn bị giới hạn chiều cao nhưng có thể scroll, giữ max-height thay vì none:
+   max-height: 98vh !important;  (thì scroll sẽ chỉ xuất hiện nếu overlay nội bộ có nội dung khác) */
+
+
+   /* SIMPLE TOOLTIP v1 - minimal */
+.tooltip-box {
+  position: fixed;
+  display: none;            /* ẩn mặc định */
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  font-size: 13px;
+  line-height: 1.4;
+  color: #111;
+  max-width: 320px;
+  z-index: 12000;
+  pointer-events: none;     /* không chặn chuột */
+  border-radius: 6px;
+}
+
+/* tiện: class để bật tooltip */
+.tooltip-box.visible {
+  display: block;
+}
+
+/* thu gọn tooltip cho audio */
+.audio-wrap .tooltip-box {
+  max-width: 240px;
+  font-size: 13px;
+  padding: 6px 8px;
+}
+
+.mini-audio {
+  display: block;   /* Quan trọng: tránh inline element bị collapse */
+}
+
+
+/* Modal full-screen chung */
+.page-modal {
+  position: fixed;
+  inset: 0;
+  display: none;               /* show bằng JS */
+  z-index: 20000;              /* lớn hơn mọi thứ */
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* backdrop mờ */
+.page-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+/* panel chứa nội dung, cho phép scroll nội bộ */
+.page-modal__panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 48px 20px;       /* breathing khi trên mobile */
+  box-sizing: border-box;
+  pointer-events: none;     /* để backdrop bắt click (panel con bật lại pointer-events) */
+}
+
+/* content area: trắng, scroll, vuông góc */
+.page-modal__panel > .page-modal__content {
+  pointer-events: auto;
+  background: #fff;
+  width: min(1100px, 96vw);      /* max width */
+  max-height: 92vh;
+  overflow: auto;
+  padding: 34px;
+  box-sizing: border-box;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  position: relative;
+}
+
+/* close button top-right */
+.page-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  line-height: 34px;
+  font-size: 20px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 2;
+}
+
+/* hiển thị modal (JS gán class .is-open) */
+.page-modal.is-open { display: block; }
+
+/* responsive: reduce padding */
+@media (max-width: 700px){
+  .page-modal__panel { padding: 16px; }
+  .page-modal__panel > .page-modal__content { padding: 20px; width: 96vw; max-height: 88vh; }
+  .page-modal__close { top: 8px; right: 8px; width: 32px; height: 32px; }
+}
+
+/* Popup khi mở Project */
+.page-modal[data-type="project"] .page-modal__content {
+  background: #fff;
+}
+
+/* Popup khi mở Credits */
+.page-modal[data-type="credits"] .page-modal__content {
+  background: #f9f8f4;
+}
+
