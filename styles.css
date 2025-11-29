@@ -99,13 +99,7 @@ body {
 .zine-col > * { max-width: 100%; }
 
 /* RESPONSIVE: chuyển stack trên mobile */
-@media (max-width: 900px) {
-  .zine-container { flex-direction: column; height: auto; }
-  .zine-container::after { display: none; }
-  .zine-col { flex-basis: auto; width: 100%; height: auto; padding: 24px; }
-  .left-inner { max-width: 100%; }
-  .zine-col.right .inner { max-width: 100%; margin: 0; padding-right: 0; padding-left: 0; font-size: 18px; line-height: 1.6; }
-}
+
 .poem-purple {
   font-size: 18px;
   line-height: 2.5;
