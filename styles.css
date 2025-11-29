@@ -525,29 +525,33 @@ body {
 
 /* MOBILE: giữ 2 cột cạnh nhau, cho phép slide ngang với scroll-snap */
 @media (max-width: 900px) {
-  /* 1) allow page-level horizontal scroll (override root setting) */
-  html, body {
-    overflow-x: auto !important;              /* cho phép swipe ngang */
-    -webkit-overflow-scrolling: touch !important; /* smooth trên iOS */
-    touch-action: pan-x !important;           /* cho phép pan ngang */
-  }
-
-  /* 2) đảm bảo container có horizontal scroll (bảo hiểm) */
+  /* Container: hai cột nằm cạnh nhau, enable horizontal scroll */
   .zine-container {
+    flex-direction: row !important;
+    /* Quan trọng: đừng ép width:100vw; để scroll hoạt động, cho container đủ rộng */
+    min-width: 200vw !important;    /* <-- cho phép 2 cột (2 × 100vw) */
+    height: 100vh;
     overflow-x: auto !important;
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch !important;
-    touch-action: pan-x !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
   }
 
-  /* 3) bên trong mỗi cột: ưu tiên cuộn dọc, tránh xung đột khi vuốt */
+  /* Mỗi cột chiếm toàn bộ viewport */
   .zine-col {
-    touch-action: pan-y !important;
-    -ms-touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch !important;
+    flex: 0 0 100vw !important;
+    min-width: 100vw !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-align: center;
+    box-sizing: border-box;
+    touch-action: pan-y; /* allow vertical scroll inside column */
   }
 
-  /* 4) ẩn thanh vertical center line (nếu bạn muốn) */
+  /* ẩn các đường divider nếu chúng gây rối */
   body::before, .zine-container::after { display: none !important; }
 }
