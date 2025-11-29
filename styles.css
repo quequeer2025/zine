@@ -529,12 +529,20 @@ body {
   background: #f9f8f4;
 }
 
-/* Ẩn divider trên màn hình nhỏ (điện thoại) — recommended */
 @media (max-width: 900px) {
-  body::before,
-  .zine-container::after {
-    display: none !important;
+  .zine-container {
+    flex-direction: row;     /* giữ 2 cột */
+    overflow-x: auto;        /* cho phép vuốt ngang */
+    height: 100vh;
   }
+  .zine-col {
+    flex: 0 0 50vw;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  /* có thể giữ hoặc ẩn line tùy bạn */
+  body::before { display: block; } 
 }
+
 
 
