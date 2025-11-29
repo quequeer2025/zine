@@ -7,27 +7,7 @@
   <title>Zine</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const imgs = document.querySelectorAll(".zoom-img");
-  
-    imgs.forEach(img => {
-      img.addEventListener("click", () => {
-        // nếu có data-full thì thay src khi mở lớn
-        if (!img.classList.contains("expanded") && img.dataset.full) {
-          img.dataset.thumb = img.src;    // lưu ảnh nhỏ
-          img.src = img.dataset.full;     // đổi sang ảnh lớn
-        } else if (img.classList.contains("expanded") && img.dataset.thumb) {
-          img.src = img.dataset.thumb;    // đổi lại ảnh nhỏ
-        }
-  
-        img.classList.toggle("expanded");
-      });
-    });
-  });
-  </script>
-    
-  
+
 <body>
 
 <div class="zine-container">
@@ -606,23 +586,24 @@
 
 
   <!-- HEADER -->
-<header class="simple-header">
-  <div class="h-left">
-    <a href="index.html">đất - nước - mình | walking water</a>
-  </div>
-  <div class="h-right">
-    <a href="index.html">một bài tập | a sensual excercise with the land</a>
-  </div>
-</header>
-<!-- FOOTER -->
-<footer class="simple-footer">
-  <div class="f-left">
-    <a href="/index.html">Về dự án</a>
-  </div>
-  <div class="f-right">
-    <a href="/info.html">Về Zine</a>
-  </div>
-</footer>
+  <header class="simple-header">
+    <div class="h-left">
+      <a href="index.html">đất - nước - mình | walking water</a>
+    </div>
+    <div class="h-right">
+      <a href="index.html">một bài tập | a sensual excercise with the land</a>
+    </div>
+  </header>
+  <!-- FOOTER -->
+  <footer class="simple-footer">
+    <div class="f-left">
+      <a href="/index.html">Về dự án</a>
+    </div>
+    <div class="f-right">
+      <a href="/info.html">Về Zine</a>
+    </div>
+  </footer>
+</div>
 
 
 <!-- MODAL CONTAINERS (giữ hidden, dùng lại khi cần) -->
@@ -772,256 +753,222 @@
   })();
   </script>
   
-  
-
+ <!-- SCRIPTS - đặt tất cả ở cuối body để DOM sẵn sàng -->
 <script>
-  (function(){
-    // đảm bảo chỉ có một overlay trong body
-    let overlay = document.getElementById('lightbox-overlay');
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = 'lightbox-overlay';
-      overlay.innerHTML = '<img id="lightbox-img" alt="Enlarged image">';
-      document.body.appendChild(overlay);
-    }
-    const bigImg = document.getElementById('lightbox-img');
-  
-    // open
-    function openLightbox(src, opts = {}) {
-  bigImg.src = src;
-  if (opts.cover) overlay.classList.add('cover'); else overlay.classList.remove('cover');
-  overlay.classList.add('active');
-  // KHÔNG khóa scroll của body — scroll sẽ xảy ra trong overlay
-}
-  
-    // close
-    function closeLightbox(){
-      overlay.classList.remove('active');
-      bigImg.src = '';
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-    }
-  
-    // click overlay closes
-    overlay.addEventListener('click', (e)=>{
-      // if click directly on image also close
-      closeLightbox();
-    });
-  
-    // ESC to close
-    document.addEventListener('keydown', (e)=>{
-      if (e.key === 'Escape') closeLightbox();
-    });
-  
-    // attach to images (callable again)
-    function attach() {
-      const imgs = document.querySelectorAll('.media-img, .zoom-img, img.thumb, img[data-lightbox], img[data-full]');
-      imgs.forEach(img=>{
-        if (img.dataset.lbBound) return;
-        img.dataset.lbBound = '1';
-        img.style.cursor = 'zoom-in';
-        img.addEventListener('click', (ev)=>{
-          ev.preventDefault();
-          // prefer data-full (hi-res). If attribute data-full exists, use it.
-          const src = img.dataset.full || img.getAttribute('data-full') || img.src;
-          // nếu muốn ảnh phủ che full (crop) set data-cover="1" trên image
-          const cover = img.dataset.cover === "1";
-          openLightbox(src, { cover });
-        });
-      });
-    }
-  
-    attach();
-  
-    // observe new images added later
-    const mo = new MutationObserver(()=> attach());
-    mo.observe(document.body, { childList: true, subtree: true });
-  })();
-  </script>
+document.addEventListener("DOMContentLoaded", () => {
+  const imgs = document.querySelectorAll(".zoom-img");
 
+  imgs.forEach(img => {
+    img.addEventListener("click", () => {
+      if (!img.classList.contains("expanded") && img.dataset.full) {
+        img.dataset.thumb = img.src;
+        img.src = img.dataset.full;
+      } else if (img.classList.contains("expanded") && img.dataset.thumb) {
+        img.src = img.dataset.thumb;
+      }
+      img.classList.toggle("expanded");
+    });
+  });
+});
+</script>
+
+<!-- LIGHTBOX / IMAGE ATTACHER -->
 <script>
-  (function(){
-    // bảo đảm chỉ chạy 1 lần
-    if (window.__SIMPLE_TOOLTIP_LOADED) return;
-    window.__SIMPLE_TOOLTIP_LOADED = true;
-  
-    // Tìm hộp tooltip tương ứng với trigger
-    function findBox(trigger){
-      if (!trigger) return null;
-      let s = trigger.nextElementSibling;
-      if (s && s.classList && s.classList.contains('tooltip-box')) return s;
-      if (trigger.parentElement){
-        s = trigger.parentElement.querySelector('.tooltip-box');
-        if (s) return s;
-      }
-      const block = trigger.closest('.tooltip-block');
-      if (block){
-        s = block.querySelector('.tooltip-box');
-        if (s) return s;
-      }
-      return null;
-    }
-  
-    // đặt vị trí, giữ trong viewport
-    function place(box, x, y){
-      if (!box) return;
-      const pad = 10;
-      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  
-      // đo kích thước (hiện tạm để đo)
-      box.style.left = '-9999px';
-      box.style.top = '-9999px';
-      box.classList.add('visible'); // để đo được kích thước
-      const rect = box.getBoundingClientRect();
-      // tính vị trí
-      let left = x + pad;
-      let top = y + pad;
-      if (left + rect.width + 8 > vw) left = x - pad - rect.width;
-      if (left < 8) left = 8;
-      if (top + rect.height + 8 > vh) top = y - pad - rect.height;
-      if (top < 8) top = 8;
-      box.style.left = left + 'px';
-      box.style.top = top + 'px';
-    }
-  
-    // show / hide
-    function show(box, x, y){
-      if (!box) return;
-      place(box, x, y);
-      box.classList.add('visible');
-    }
-    function hide(box){
-      if (!box) return;
-      box.classList.remove('visible');
-      // keep left/top as-is (no need to reset)
-    }
-  
-    // attach to triggers
-    function attach(){
-      const triggers = document.querySelectorAll('.tooltip-trigger, .img-tooltip-trigger');
-      triggers.forEach(trigger=>{
-        if (trigger.dataset._ttBound) return;
-        trigger.dataset._ttBound = '1';
-  
-        const box = findBox(trigger);
-        if (!box) return;
-  
-        // mouse
-        let raf = null;
-        let latest = null;
-        function onMove(e){
-          latest = e;
-          if (raf) return;
-          raf = requestAnimationFrame(()=>{
-            raf = null;
-            show(box, latest.clientX, latest.clientY);
-          });
-        }
-        function onEnter(e){
-          show(box, e.clientX, e.clientY);
-        }
-        function onLeave(){
-          if (raf) { cancelAnimationFrame(raf); raf = null; }
-          hide(box);
-        }
-        trigger.addEventListener('mousemove', onMove);
-        trigger.addEventListener('mouseenter', onEnter);
-        trigger.addEventListener('mouseleave', onLeave);
-  
-        // touch: tap to show briefly (mobile)
-        trigger.addEventListener('touchstart', function(e){
-  // don't stop propagation — allow container to receive horizontal pan
-  // detect quick tap vs pan: if multiple touchmove soon after, we won't show
-  let moved = false;
-  function onMove(){ moved = true; }
-  function onEnd(){
-    trigger.removeEventListener('touchmove', onMove);
-    document.removeEventListener('touchend', onEnd);
-    if (!moved) {
-      // a quick tap -> show tooltip near element center
-      const r = trigger.getBoundingClientRect();
-      show(box, r.left + r.width/2, r.top + r.height/2);
-      const hideNow = ()=> hide(box);
-      document.addEventListener('touchstart', hideNow, { once: true, passive: true });
-      setTimeout(hideNow, 2000);
-    }
+(function(){
+  let overlay = document.getElementById('lightbox-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'lightbox-overlay';
+    overlay.innerHTML = '<img id="lightbox-img" alt="Enlarged image">';
+    document.body.appendChild(overlay);
   }
-  trigger.addEventListener('touchmove', onMove, { passive: true });
-  document.addEventListener('touchend', onEnd, { passive: true });
-}, { passive: true });
+  const bigImg = document.getElementById('lightbox-img');
 
-  
-    attach();
-    // observe DOM changes so dynamically added content gets tooltips too
-    const mo = new MutationObserver(attach);
-    mo.observe(document.body, { childList: true, subtree: true });
-  })();
-  </script>
+  function openLightbox(src, opts = {}) {
+    bigImg.src = src;
+    if (opts.cover) overlay.classList.add('cover'); else overlay.classList.remove('cover');
+    overlay.classList.add('active');
+  }
 
- <!-- SLIDE HINT: only for touch devices AND only if container is scrollable -->
+  function closeLightbox(){
+    overlay.classList.remove('active');
+    bigImg.src = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', (e)=> closeLightbox());
+  document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeLightbox(); });
+
+  function attach() {
+    const imgs = document.querySelectorAll('.media-img, .zoom-img, img.thumb, img[data-lightbox], img[data-full]');
+    imgs.forEach(img=>{
+      if (img.dataset.lbBound) return;
+      img.dataset.lbBound = '1';
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        const src = img.dataset.full || img.getAttribute('data-full') || img.src;
+        const cover = img.dataset.cover === "1";
+        openLightbox(src, { cover });
+      });
+    });
+  }
+
+  attach();
+  const mo = new MutationObserver(()=> attach());
+  mo.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+<!-- TOOLTIP nhẹ (không chặn pan/scroll) -->
+<script>
+(function(){
+  if (window.__SIMPLE_TOOLTIP_LOADED) return;
+  window.__SIMPLE_TOOLTIP_LOADED = true;
+
+  function findBox(trigger){
+    if (!trigger) return null;
+    let s = trigger.nextElementSibling;
+    if (s && s.classList && s.classList.contains('tooltip-box')) return s;
+    if (trigger.parentElement){
+      s = trigger.parentElement.querySelector('.tooltip-box');
+      if (s) return s;
+    }
+    const block = trigger.closest('.tooltip-block');
+    if (block){
+      s = block.querySelector('.tooltip-box');
+      if (s) return s;
+    }
+    return null;
+  }
+
+  function place(box, x, y){
+    if (!box) return;
+    const pad = 10;
+    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    box.style.left = '-9999px';
+    box.style.top = '-9999px';
+    box.classList.add('visible');
+    const rect = box.getBoundingClientRect();
+    let left = x + pad;
+    let top = y + pad;
+    if (left + rect.width + 8 > vw) left = x - pad - rect.width;
+    if (left < 8) left = 8;
+    if (top + rect.height + 8 > vh) top = y - pad - rect.height;
+    if (top < 8) top = 8;
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+  }
+
+  function show(box, x, y){
+    if (!box) return;
+    place(box, x, y);
+    box.classList.add('visible');
+  }
+  function hide(box){
+    if (!box) return;
+    box.classList.remove('visible');
+  }
+
+  function attach(){
+    const triggers = document.querySelectorAll('.tooltip-trigger, .img-tooltip-trigger');
+    triggers.forEach(trigger=>{
+      if (trigger.dataset._ttBound) return;
+      trigger.dataset._ttBound = '1';
+      const box = findBox(trigger);
+      if (!box) return;
+
+      let raf = null;
+      let latest = null;
+      function onMove(e){
+        latest = e;
+        if (raf) return;
+        raf = requestAnimationFrame(()=>{
+          raf = null;
+          show(box, latest.clientX, latest.clientY);
+        });
+      }
+      function onEnter(e){ show(box, e.clientX, e.clientY); }
+      function onLeave(){ if (raf) { cancelAnimationFrame(raf); raf = null; } hide(box); }
+
+      trigger.addEventListener('mousemove', onMove);
+      trigger.addEventListener('mouseenter', onEnter);
+      trigger.addEventListener('mouseleave', onLeave);
+
+      // touch: detect tap vs pan; do not stopPropagation so horizontal pan works
+      trigger.addEventListener('touchstart', function(e){
+        let moved = false;
+        function onMove(){ moved = true; }
+        function onEnd(){
+          trigger.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onEnd);
+          if (!moved) {
+            const r = trigger.getBoundingClientRect();
+            show(box, r.left + r.width/2, r.top + r.height/2);
+            const hideNow = ()=> hide(box);
+            document.addEventListener('touchstart', hideNow, { once: true, passive: true });
+            setTimeout(hideNow, 2000);
+          }
+        }
+        trigger.addEventListener('touchmove', onMove, { passive: true });
+        document.addEventListener('touchend', onEnd, { passive: true });
+      }, { passive: true });
+
+    });
+  }
+
+  attach();
+  const mo = new MutationObserver(attach);
+  mo.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+<!-- SLIDE HINT + ARROW KEYS: chỉ hiển thị hint trên thiết bị touch và khi có thể cuộn -->
 <script>
 (function(){
   const container = document.querySelector('.zine-container');
   if (!container) return;
-
-  // detect touch-capable device (works for most cases)
   const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
-
-  // only on touch-capable devices and on small viewports
   const mq = window.matchMedia('(max-width: 900px)');
 
   function canScrollHorizontally() {
-    // ensure layout computed
-    return container.scrollWidth > container.clientWidth + 2; // +2 to avoid rounding issues
+    return container.scrollWidth > container.clientWidth + 2;
   }
 
-  // create hint element but don't append yet
   const hint = document.createElement('div');
   hint.className = 'slide-hint';
   hint.textContent = '‹ swipe ›';
 
   function showHintIfNeeded() {
-    // remove if already appended
     if (hint.parentElement) hint.parentElement.removeChild(hint);
-
-    if (!isTouch) return;              // don't show on non-touch devices
-    if (!mq.matches) return;           // only on small screens (<=900px)
-    if (!canScrollHorizontally()) return; // only if container is actually scrollable
-
+    if (!isTouch) return;
+    if (!mq.matches) return;
+    if (!canScrollHorizontally()) return;
     document.body.appendChild(hint);
-    // tiny entrance animation
     requestAnimationFrame(()=> hint.classList.add('visible'));
-    // auto-hide after short time
     setTimeout(()=> {
       hint.classList.remove('visible');
-      setTimeout(()=> {
-        if (hint.parentElement) hint.parentElement.removeChild(hint);
-      }, 300);
+      setTimeout(()=> { if (hint.parentElement) hint.parentElement.removeChild(hint); }, 300);
     }, 1800);
   }
 
-  // initial run and on resize / orientationchange
   showHintIfNeeded();
   window.addEventListener('resize', () => { setTimeout(showHintIfNeeded, 120); });
   window.addEventListener('orientationchange', () => { setTimeout(showHintIfNeeded, 300); });
 
-  // keyboard left/right behavior: keep it (desktop users can still use arrows)
   document.addEventListener('keydown', (e) => {
     if (!container) return;
     const w = window.innerWidth;
-    if (e.key === 'ArrowRight') {
-      container.scrollBy({ left: w, behavior: 'smooth' });
-    } else if (e.key === 'ArrowLeft') {
-      container.scrollBy({ left: -w, behavior: 'smooth' });
-    }
+    if (e.key === 'ArrowRight') container.scrollBy({ left: w, behavior: 'smooth' });
+    else if (e.key === 'ArrowLeft') container.scrollBy({ left: -w, behavior: 'smooth' });
   });
-
 })();
 </script>
 
+<!-- hint style -->
 <style>
-/* NOTE: hint is hidden by default; JS adds it only on touch devices */
 .slide-hint {
   position: fixed;
   top: 18px;
@@ -1033,18 +980,14 @@
   font-family: "Cormorant Garamond", serif;
   font-size: 13px;
   opacity: 0;
-  transition: opacity .28s cubic-bezier(.2,.9,.2,1), transform .28s cubic-bezier(.2,.9,.2,1);
+  transition: opacity .28s ease, transform .28s ease;
   z-index: 12000;
   pointer-events: none;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   display: inline-block;
 }
-.slide-hint.visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.slide-hint.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 
-  
 </body>
 </html>
