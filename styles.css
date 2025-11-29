@@ -529,3 +529,18 @@ body {
   background: #f9f8f4;
 }
 
+@media (max-width: 900px) {
+  .zine-container {
+    flex-direction: row;     /* giữ 2 cột */
+    overflow-x: auto;        /* cho phép vuốt ngang */
+    height: 100vh;
+  }
+  .zine-col {
+    flex: 0 0 50vw;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  /* có thể giữ hoặc ẩn line tùy bạn */
+  body::before { display: block; } 
+}
+
