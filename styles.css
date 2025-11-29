@@ -529,3 +529,12 @@ body {
   background: #f9f8f4;
 }
 
+/* Ẩn divider trên màn hình nhỏ (điện thoại) — recommended */
+@media (max-width: 900px) {
+  body::before,
+  .zine-container::after {
+    display: none !important;
+  }
+}
+
+
