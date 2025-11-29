@@ -931,16 +931,26 @@
   
         // touch: tap to show briefly (mobile)
         trigger.addEventListener('touchstart', function(e){
-          // prevent synthetic mouse events
-          e.stopPropagation();
-          const r = trigger.getBoundingClientRect();
-          show(box, r.left + r.width/2, r.top + r.height/2);
-          const hideNow = ()=> hide(box);
-          document.addEventListener('touchstart', hideNow, { once: true, passive: true });
-          setTimeout(hideNow, 2000);
-        }, { passive: true });
-      });
+  // don't stop propagation — allow container to receive horizontal pan
+  // detect quick tap vs pan: if multiple touchmove soon after, we won't show
+  let moved = false;
+  function onMove(){ moved = true; }
+  function onEnd(){
+    trigger.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+    if (!moved) {
+      // a quick tap -> show tooltip near element center
+      const r = trigger.getBoundingClientRect();
+      show(box, r.left + r.width/2, r.top + r.height/2);
+      const hideNow = ()=> hide(box);
+      document.addEventListener('touchstart', hideNow, { once: true, passive: true });
+      setTimeout(hideNow, 2000);
     }
+  }
+  trigger.addEventListener('touchmove', onMove, { passive: true });
+  document.addEventListener('touchend', onEnd, { passive: true });
+}, { passive: true });
+
   
     attach();
     // observe DOM changes so dynamically added content gets tooltips too
