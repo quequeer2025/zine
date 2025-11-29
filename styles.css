@@ -531,45 +531,29 @@ body {
 
 /* MOBILE: giữ 2 cột cạnh nhau, cho phép slide ngang với scroll-snap */
 @media (max-width: 900px) {
+  /* 1) allow page-level horizontal scroll (override root setting) */
+  html, body {
+    overflow-x: auto !important;              /* cho phép swipe ngang */
+    -webkit-overflow-scrolling: touch !important; /* smooth trên iOS */
+    touch-action: pan-x !important;           /* cho phép pan ngang */
+  }
 
-  /* Container: vẫn là flex row, cho phép cuộn ngang */
+  /* 2) đảm bảo container có horizontal scroll (bảo hiểm) */
   .zine-container {
-    flex-direction: row !important;      /* force hai cột cạnh nhau */
-    width: 100vw !important;
-    min-width: 100%;
-    height: 100vh;
-    overflow-x: auto !important;        /* enable horizontal scroll */
-    overflow-y: hidden !important;      /* avoid double vertical on container */
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;   /* smooth on iOS */
-    touch-action: pan-x;                 /* allow horizontal pan */
-    -ms-touch-action: pan-x;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-x !important;
   }
 
-  /* Mỗi cột chiếm toàn bộ viewport (không dùng fixed 200vw) */
+  /* 3) bên trong mỗi cột: ưu tiên cuộn dọc, tránh xung đột khi vuốt */
   .zine-col {
-    flex: 0 0 100vw !important;
-    min-width: 100vw !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    overflow-y: auto !important;        /* mỗi cột cuộn dọc độc lập */
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-align: center;
-    box-sizing: border-box;
-    touch-action: pan-y;                 /* prioritise vertical scroll inside column */
-    -ms-touch-action: pan-y;
+    touch-action: pan-y !important;
+    -ms-touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
-  /* Giữ inner widths hợp lý */
-  .left-inner { max-width: calc(100vw - 80px) !important; }
-  .zine-col.right .inner { max-width: 100% !important; padding-left: 18px; padding-right: 18px; }
-
-  /* ẩn vertical divider (nếu nó gây rắc rối trên mobile) */
+  /* 4) ẩn thanh vertical center line (nếu bạn muốn) */
   body::before, .zine-container::after { display: none !important; }
-
-  /* Hint styling (nếu dùng slide-hint) */
-  .slide-hint { top: 10px !important; font-size: 12px !important; padding: 6px 10px !important; }
 }
-
-
