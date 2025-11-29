@@ -959,20 +959,54 @@
   })();
   </script>
 
-  <script>
+ <!-- SLIDE HINT: only for touch devices AND only if container is scrollable -->
+<script>
 (function(){
   const container = document.querySelector('.zine-container');
-  if(!container) return;
+  if (!container) return;
 
-  // show a small hint for first view (fade out)
+  // detect touch-capable device (works for most cases)
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+
+  // only on touch-capable devices and on small viewports
+  const mq = window.matchMedia('(max-width: 900px)');
+
+  function canScrollHorizontally() {
+    // ensure layout computed
+    return container.scrollWidth > container.clientWidth + 2; // +2 to avoid rounding issues
+  }
+
+  // create hint element but don't append yet
   const hint = document.createElement('div');
   hint.className = 'slide-hint';
-  hint.innerHTML = '‹ swipe ›';
-  document.body.appendChild(hint);
-  setTimeout(()=> hint.classList.add('visible'), 400);
-  setTimeout(()=> hint.classList.remove('visible'), 2200);
+  hint.textContent = '‹ swipe ›';
 
-  // keyboard: left / right to move one column
+  function showHintIfNeeded() {
+    // remove if already appended
+    if (hint.parentElement) hint.parentElement.removeChild(hint);
+
+    if (!isTouch) return;              // don't show on non-touch devices
+    if (!mq.matches) return;           // only on small screens (<=900px)
+    if (!canScrollHorizontally()) return; // only if container is actually scrollable
+
+    document.body.appendChild(hint);
+    // tiny entrance animation
+    requestAnimationFrame(()=> hint.classList.add('visible'));
+    // auto-hide after short time
+    setTimeout(()=> {
+      hint.classList.remove('visible');
+      setTimeout(()=> {
+        if (hint.parentElement) hint.parentElement.removeChild(hint);
+      }, 300);
+    }, 1800);
+  }
+
+  // initial run and on resize / orientationchange
+  showHintIfNeeded();
+  window.addEventListener('resize', () => { setTimeout(showHintIfNeeded, 120); });
+  window.addEventListener('orientationchange', () => { setTimeout(showHintIfNeeded, 300); });
+
+  // keyboard left/right behavior: keep it (desktop users can still use arrows)
   document.addEventListener('keydown', (e) => {
     if (!container) return;
     const w = window.innerWidth;
@@ -983,29 +1017,32 @@
     }
   });
 
-  // optionally ensure small inertia on touch
 })();
 </script>
 
 <style>
-/* hint style (put near top-right or center) */
+/* NOTE: hint is hidden by default; JS adds it only on touch devices */
 .slide-hint {
   position: fixed;
   top: 18px;
   left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.9);
+  transform: translateX(-50%) translateY(-6px);
+  background: rgba(255,255,255,0.95);
   padding: 6px 12px;
   border-radius: 6px;
   font-family: "Cormorant Garamond", serif;
   font-size: 13px;
   opacity: 0;
-  transition: opacity .4s ease, transform .4s ease;
+  transition: opacity .28s cubic-bezier(.2,.9,.2,1), transform .28s cubic-bezier(.2,.9,.2,1);
   z-index: 12000;
   pointer-events: none;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  display: inline-block;
 }
-.slide-hint.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.slide-hint.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 </style>
 
   
