@@ -529,18 +529,37 @@ body {
   background: #f9f8f4;
 }
 
+/* MOBILE: giữ 2 cột cạnh nhau, cho phép slide ngang với scroll-snap */
 @media (max-width: 900px) {
+  /* container cho phép cuộn ngang */
   .zine-container {
-    flex-direction: row;     /* giữ 2 cột */
-    overflow-x: auto;        /* cho phép vuốt ngang */
+    flex-direction: row;      /* force row (không stack) */
+    width: 200vw;             /* tổng rộng = 2 x viewport để 2 cột cạnh nhau */
+    min-width: 200vw;
     height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;       /* tránh double vertical trên container */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
+
+  /* mỗi cột chiếm 100vw (viewport width) -> hiển thị như trang riêng */
   .zine-col {
-    flex: 0 0 50vw;
+    flex: 0 0 100vw;
+    width: 100vw;
     height: 100vh;
-    overflow-y: auto;
+    overflow-y: auto;         /* cho phép cuộn dọc trong từng cột */
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-align: center;
+    box-sizing: border-box;
   }
-  /* có thể giữ hoặc ẩn line tùy bạn */
-  body::before { display: block; } 
+
+  /* giữ layout inner */
+  .left-inner { max-width: calc(100vw - 80px); }
+  .zine-col.right .inner { max-width: 100%; padding-left: 18px; padding-right: 18px; }
+
+  /* ẩn vertical divider nếu nó cắt ngang content (tuỳ chọn) */
+  body::before, .zine-container::after { display: none !important; }
 }
+
 
